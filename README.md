@@ -1,1 +1,2 @@
-# web_scrap_elnino
+# Web Scrapper Elnino.
+Changes of perfumes quantity.
