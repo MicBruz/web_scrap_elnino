@@ -2,8 +2,19 @@ require 'nokogiri'
 require 'httparty'
 require 'byebug'
 
+# $meskie_array = []
+# $damskie_array = []
+# $unisex_array = []
+
+m_arr = []
+d_arr = []
+u_arr = []
 def scraper
-  url = "https://www.elnino-parfum.pl/perfumy/?c=459&sort=price_desc&page=1"
+
+  # meskie_array = []
+  # damskie_array = []
+  # unisex_array = []
+  url = "https://www.elnino-parfum.pl/perfumy/?c=459&page=1"
   unparsed_page = HTTParty.get(url) # we get raw HTML of that page
   parsed_page = Nokogiri::HTML(unparsed_page) # we parse it to a format we can extract from it
 
@@ -13,13 +24,30 @@ def scraper
   unisex = nr_per_sex[2].children[0].text.slice(30,3)
 
 
-
   puts "Męskie: #{meskie}"
   puts "Damskie: #{damskie}"
   puts "Unisex: #{unisex}"
+
+  File.open('output.txt', 'a') do |file|
+    file.puts Time.now.strftime("%d.%m.%Y | %H:%M")
+    file.puts "Męskie: #{meskie}"
+    file.puts "Damskie: #{damskie}"
+    file.puts "Unisex: #{unisex}"
+    file.puts "----------------------"
+  end
+
+  # a << meskie
+  # b << damskie
+  # c << unisex
+
+
+  # puts a
+  # puts b
+  # puts c
   # byebug
 
 end
 
-
 scraper
+# scraper(m_arr, d_arr, u_arr)
+
